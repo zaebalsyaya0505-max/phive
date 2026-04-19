@@ -224,7 +224,7 @@ export default function AdvertisePage() {
                 Рассчитайте <span className="text-gradient">прибыль</span>
               </h2>
               <p className="text-white/50 text-lg mb-8">
-                Используйте калькулятор для оценки потенциальной выручки от рекламной кампании в Phantom.
+                Используйте калькулятор для оценки потенциальной выручки от рекламной кампании в pHive.
               </p>
               <div className="space-y-4">
                 {[
@@ -427,7 +427,7 @@ export default function AdvertisePage() {
             Свяжитесь с нашим менеджером для обсуждения деталей кампании
           </p>
           <a
-            href="mailto:ads@phantom.net"
+            href="mailto:ads@phive.net"
             className="inline-flex items-center gap-2 px-10 py-5 bg-phantom-purple text-white font-semibold rounded-lg hover:bg-phantom-purple-deep transition-all hover:shadow-glow text-lg"
           >
             Связаться с менеджером

@@ -44,10 +44,10 @@ export default function Navbar() {
           <Link to="/" className="flex items-center gap-3 group">
             <img
               src="/images/logo-light.png"
-              alt="Phantom"
+              alt="pHive"
               className="w-8 h-8 transition-transform group-hover:scale-110"
             />
-            <span className="text-xl font-bold text-white tracking-tight">Phantom</span>
+            <span className="text-xl font-bold text-white tracking-tight">pHive</span>
           </Link>
 
           {/* Desktop Nav */}

@@ -18,7 +18,7 @@ function HeroSection() {
         <div className="max-w-2xl">
           <div className="flex items-center gap-3 mb-6">
             <img src="/images/logo-light.png" alt="" className="w-10 h-10 opacity-60" />
-            <span className="text-white/40 text-sm font-medium tracking-wider uppercase">Phantom Network</span>
+            <span className="text-white/40 text-sm font-medium tracking-wider uppercase">pHive Network</span>
           </div>
           <h1 className="text-5xl sm:text-6xl lg:text-[72px] font-bold text-white leading-[0.95] tracking-tight">
             Свобода контента
@@ -104,7 +104,7 @@ function ProblemSolutionSection() {
               <span className="text-phantom-purple text-sm font-semibold uppercase tracking-wider">Решение</span>
             </div>
             <h2 className="text-3xl lg:text-[40px] font-bold text-white leading-tight mb-6">
-              Phantom
+              pHive
               <br />
               открывает доступ
             </h2>

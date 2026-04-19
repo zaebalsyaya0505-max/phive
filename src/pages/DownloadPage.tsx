@@ -88,7 +88,7 @@ export default function DownloadPage() {
           <div className="animate-in opacity-0 translate-y-8 transition-all duration-700">
             <Download className="w-12 h-12 text-phantom-purple mx-auto mb-6" />
             <h1 className="text-4xl lg:text-[72px] font-bold text-white leading-[0.95] tracking-tight mb-6">
-              Скачать <span className="text-gradient">Phantom</span>
+              Скачать <span className="text-gradient">pHive</span>
             </h1>
             <p className="text-white/50 text-lg max-w-xl mx-auto mb-4">
               Последняя версия: 2.4.1 от 15 апреля 2026
@@ -172,7 +172,7 @@ export default function DownloadPage() {
                 <h3 className="text-white font-bold text-lg mb-2">Проверьте подлинность</h3>
                 <p className="text-white/50 text-sm mb-4">
                   Всегда проверяйте SHA-256 хеш загруженного файла, чтобы убедиться в его подлинности.
-                  Phantom использует цифровые подписи для верификации всех сборок.
+                  pHive использует цифровые подписи для верификации всех сборок.
                 </p>
                 <div className="flex items-center gap-3 p-4 rounded-xl bg-black/30">
                   <code className="text-phantom-purple text-sm font-mono flex-1 truncate">

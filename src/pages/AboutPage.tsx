@@ -244,7 +244,7 @@ export default function AboutPage() {
             Мы всегда ищем талантливых людей, которые разделяют наши ценности
           </p>
           <a
-            href="mailto:careers@phantom.net"
+            href="mailto:careers@phive.net"
             className="inline-flex items-center gap-2 px-10 py-5 bg-phantom-purple text-white font-semibold rounded-lg hover:bg-phantom-purple-deep transition-all hover:shadow-glow text-lg"
           >
             Открытые вакансии

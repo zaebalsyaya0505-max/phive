@@ -33,14 +33,14 @@ export default function PartnersPage() {
     {
       icon: Server,
       title: 'P2P Mesh-узлы',
-      desc: 'Подключите свой сервер к сети Phantom и зарабатывайте на распределении трафика. Чем выше аптайм и пропускная способность — тем больше доход.',
+      desc: 'Подключите свой сервер к сети pHive и зарабатывайте на распределении трафика. Чем выше аптайм и пропускная способность — тем больше доход.',
       benefits: ['Пассивный доход', 'Низкие требования', 'Автоматические выплаты в TON'],
       cta: 'Подключить узел',
     },
     {
       icon: Video,
       title: 'Контент-провайдеры',
-      desc: 'Размещайте видео и музыку в децентрализованной сети Phantom. Ваш контент доступен пользователям по всему миру без ограничений.',
+      desc: 'Размещайте видео и музыку в децентрализованной сети pHive. Ваш контент доступен пользователям по всему миру без ограничений.',
       benefits: ['Глобальный охват', 'Защита от ограничений', 'Монетизация просмотров'],
       cta: 'Разместить контент',
     },
@@ -53,22 +53,22 @@ export default function PartnersPage() {
     },
   ];
 
-  const apiCode = `// Инициализация Phantom SDK
-import { PhantomSDK } from '@phantom/sdk';
+  const apiCode = `// Инициализация pHive SDK
+import { PHiveSDK } from '@phive/sdk';
 
-const phantom = new PhantomSDK({
+const phive = new PHiveSDK({
   apiKey: 'your_api_key',
   network: 'mainnet'
 });
 
 // Подключение Phantom Hive Tunnel
-await phantom.tunnel.connect({
+await phive.tunnel.connect({
   region: 'europe',
   protocol: 'wireguard'
 });
 
 // Отправка P2P-платежа
-const tx = await phantom.payments.send({
+const tx = await phive.payments.send({
   recipient: 'EQD...xyz',
   amount: '10',
   currency: 'TON'
@@ -91,7 +91,7 @@ console.log('Transaction:', tx.hash);`;
               <span className="text-gradient">экосистему</span>
             </h1>
             <p className="text-white/50 text-lg lg:text-xl max-w-xl leading-relaxed">
-              Присоединяйтесь к децентрализованной сети Phantom как поставщик инфраструктуры,
+              Присоединяйтесь к децентрализованной сети pHive как поставщик инфраструктуры,
               контента или разработчик интеграций.
             </p>
           </div>
@@ -143,7 +143,7 @@ console.log('Transaction:', tx.hash);`;
                 Мощный <span className="text-gradient">SDK</span> для разработчиков
               </h2>
               <p className="text-white/50 text-lg leading-relaxed mb-8">
-                Полный доступ к функциям Phantom через REST API и JavaScript SDK.
+                Полный доступ к функциям pHive через REST API и JavaScript SDK.
                 Управляйте Phantom Hive Tunnel, P2P Mesh-узлами и платежами программно.
               </p>
               <div className="grid grid-cols-2 gap-4">
@@ -184,7 +184,7 @@ console.log('Transaction:', tx.hash);`;
       <section className="py-24 lg:py-32">
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
           <h2 className="text-3xl lg:text-[40px] font-bold text-white text-center mb-12 animate-in opacity-0 translate-y-8 transition-all duration-700">
-            Сеть <span className="text-gradient">Phantom</span>
+            Сеть <span className="text-gradient">pHive</span>
           </h2>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
@@ -246,10 +246,10 @@ console.log('Transaction:', tx.hash);`;
             Станьте частью <span className="text-gradient">сети</span>
           </h2>
           <p className="text-white/50 text-lg mb-10">
-            Подайте заявку на партнёрство и начните зарабатывать вместе с Phantom
+            Подайте заявку на партнёрство и начните зарабатывать вместе с pHive
           </p>
           <a
-            href="mailto:partners@phantom.net"
+            href="mailto:partners@phive.net"
             className="inline-flex items-center gap-2 px-10 py-5 bg-phantom-purple text-white font-semibold rounded-lg hover:bg-phantom-purple-deep transition-all hover:shadow-glow text-lg"
           >
             Подать заявку
