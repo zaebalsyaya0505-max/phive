@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router';
+import { Analytics } from '@vercel/analytics/react';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import AdvertisePage from './pages/AdvertisePage';
@@ -11,18 +12,21 @@ import BlogPage from './pages/BlogPage';
 
 function App() {
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/advertise" element={<AdvertisePage />} />
-        <Route path="/partners" element={<PartnersPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/docs" element={<DocsPage />} />
-        <Route path="/download" element={<DownloadPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/blog" element={<BlogPage />} />
-      </Route>
-    </Routes>
+    <>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/advertise" element={<AdvertisePage />} />
+          <Route path="/partners" element={<PartnersPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/docs" element={<DocsPage />} />
+          <Route path="/download" element={<DownloadPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+        </Route>
+      </Routes>
+      <Analytics />
+    </>
   );
 }
 
