@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    {
+      "source": "/p2p-relay/:match*",
+      "destination": "https://ТВОЙ_СКРЫТЫЙ_IP_ИЛИ_ДОМЕН/:match*"
+    }
+  ],
+  "env": {
+    "PHIVE_SECRET_KEY": "@phive_secret_key"
+  }
+}
