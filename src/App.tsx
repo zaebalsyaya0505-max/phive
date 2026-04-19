@@ -10,6 +10,7 @@ import DocsPage from './pages/DocsPage';
 import DownloadPage from './pages/DownloadPage';
 import ContactPage from './pages/ContactPage';
 import BlogPage from './pages/BlogPage';
+import NotesPage from './pages/NotesPage';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/download" element={<DownloadPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<BlogPage />} />
+          <Route path="/notes" element={<NotesPage />} />
         </Route>
       </Routes>
       <Analytics />
