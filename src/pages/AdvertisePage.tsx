@@ -309,13 +309,13 @@ export default function AdvertisePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
-                title: 'Криптобиржа DeFiX',
+                title: '***',
                 metric: '340% ROI',
-                desc: 'Кампания на CPA-модели привлекла 45K регистраций. Стоимость привлечения на 40% ниже, чем в Facebook.',
+                desc: 'Кампания на CPA-модели привлекла 45K регистраций. Стоимость привлечения на 40% ниже, чем у конкурентов.',
                 tags: ['CPA', 'Крипто', 'СНГ'],
               },
               {
-                title: 'Букмекер BetPro',
+                title: '***',
                 metric: '$280K выручки',
                 desc: 'RevShare кампания за 3 месяца. 80K установок, 25% конверсия в первый депозит.',
                 tags: ['RevShare', 'Ставки', 'Бразилия'],

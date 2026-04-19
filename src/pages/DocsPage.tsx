@@ -16,8 +16,8 @@ const faqData: Record<string, FAQItem[]> = {
       answer: 'Скачайте APK-файл со страницы загрузки. Разрешите установку из неизвестных источников в настройках устройства. Откройте APK и следуйте инструкциям установщика. Приложение готово к использованию сразу после установки.',
     },
     {
-      question: 'Как работает Phantom Tunnel?',
-      answer: 'Phantom Tunnel создаёт защищённое соединение с использованием TLS 1.4 и пост-квантовой криптографии ML-KEM. Нажмите кнопку «Подключить» на главном экране — приложение автоматически выберет оптимальный маршрут через P2P Mesh-сеть.',
+      question: 'Как работает Phantom Hive Tunnel?',
+      answer: 'Phantom Hive Tunnel создаёт защищённое соединение с использованием TLS 1.4 и пост-квантовой криптографии ML-KEM. Нажмите кнопку «Подключить» на главном экране — приложение автоматически выберет оптимальный маршрут через P2P Mesh-сеть.',
     },
     {
       question: 'Что делать, если Smart Path не работает?',
@@ -43,7 +43,7 @@ const faqData: Record<string, FAQItem[]> = {
     },
     {
       question: 'Какие вертикали работают лучше всего?',
-      answer: 'Наиболее эффективные вертикали: криптовалюты (ROI 300%+), букмекерские конторы (CR 12%), финтех-приложения (CR 6%), EdTech (CR 10%). География: СНГ, Бразилия, Индия, страны Ближнего Востока.',
+      answer: 'Наиболее эффективные вертикали: *** (ROI 300%+), *** (CR 12%), финтех-приложения (CR 6%), EdTech (CR 10%). География: СНГ, Бразилия, Индия, страны Ближнего Востока.',
     },
     {
       question: 'Как отслеживать результаты кампании?',
@@ -61,11 +61,11 @@ const faqData: Record<string, FAQItem[]> = {
     },
     {
       question: 'Есть ли SDK для мобильных платформ?',
-      answer: 'Да. Мы предоставляем нативные SDK для Android (Kotlin) и iOS (Swift), а также React Native и Flutter обёртки. SDK включает управление Phantom Tunnel, P2P Mesh-функции и платежи.',
+      answer: 'Да. Мы предоставляем нативные SDK для Android (Kotlin) и iOS (Swift), а также React Native и Flutter обёртки. SDK включает управление Phantom Hive Tunnel, P2P Mesh-функции и платежи.',
     },
     {
       question: 'Как работает WebSocket API?',
-      answer: 'WebSocket API предоставляет real-time события: подключение/отключение Phantom Tunnel, изменение статуса P2P Mesh-узла, входящие платежи. Endpoint: wss://api.phantom.net/v2/ws. Авторизация через Bearer token.',
+      answer: 'WebSocket API предоставляет real-time события: подключение/отключение Phantom Hive Tunnel, изменение статуса P2P Mesh-узла, входящие платежи. Endpoint: wss://api.phive.net/v2/ws. Авторизация через Bearer token.',
     },
     {
       question: 'Какие лимиты у API?',
@@ -226,7 +226,7 @@ export default function DocsPage() {
               {
                 icon: Server,
                 title: 'REST API v2',
-                desc: 'Полный reference всех эндпоинтов: Phantom Tunnel, P2P Mesh, платежи, аналитика.',
+                desc: 'Полный reference всех эндпоинтов: Phantom Hive Tunnel, P2P Mesh, платежи, аналитика.',
                 link: '#',
               },
               {

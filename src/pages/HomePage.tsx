@@ -26,7 +26,7 @@ function HeroSection() {
             <span className="text-gradient">без границ</span>
           </h1>
           <p className="mt-6 text-xl lg:text-2xl text-white/70 font-normal">
-            P2P Mesh / Phantom Tunnel / Медиаплатформа
+            P2P Mesh / Phantom Hive Tunnel / Оптимизация Медиа
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
             <Link
@@ -109,13 +109,13 @@ function ProblemSolutionSection() {
               открывает доступ
             </h2>
             <p className="text-white/50 text-lg leading-relaxed mb-8">
-              Децентрализованная P2P Mesh-сеть со встроенным Phantom Tunnel.
+              Децентрализованная P2P Mesh-сеть со встроенным Phantom Hive Tunnel.
               Автоматические обновления даже без прямого подключения.
               TON-кошелёк и система P2P-платежей в одном приложении.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
-                { icon: Lock, title: 'Phantom Tunnel', desc: 'Пост-квантовая защита' },
+                { icon: Lock, title: 'Phantom Hive Tunnel', desc: 'Пост-квантовая защита' },
                 { icon: Zap, title: 'Smart Path', desc: 'Адаптивная маршрутизация' },
                 { icon: Globe, title: 'P2P Mesh', desc: 'Децентрализованная сеть' },
               ].map((item) => (
@@ -225,7 +225,7 @@ function FeaturesSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
           {[
             { icon: Wallet, title: 'TON Кошелёк', desc: 'P2P-платежи' },
-            { icon: FileKey, title: 'Phantom Tunnel', desc: 'TLS 1.4 + PQ Crypto' },
+            { icon: FileKey, title: 'Phantom Hive Tunnel', desc: 'TLS 1.4 + PQ Crypto' },
             { icon: RefreshCw, title: 'Автообновление', desc: 'P2Mesh-распространение' },
             { icon: Network, title: 'P2P Mesh', desc: 'Децентрализовано' },
           ].map((item, i) => (
@@ -254,7 +254,7 @@ function ScreenshotsSection() {
     { src: '/images/screenshot-music.jpg', label: 'Phantom Audio' },
     { src: '/images/screenshot-p2p.jpg', label: 'P2P Mesh' },
     { src: '/images/screenshot-messenger.jpg', label: 'Phantom Messenger' },
-    { src: '/images/screenshot-vpn.jpg', label: 'Phantom Tunnel' },
+    { src: '/images/screenshot-vpn.jpg', label: 'Phantom Hive Tunnel' },
   ];
 
   return (
@@ -468,7 +468,7 @@ function RequirementsSection() {
           <div className="grid grid-cols-4 gap-4 px-6 py-3">
             <span className="text-white/30 text-xs uppercase tracking-wider font-semibold">Платформа</span>
             <span className="text-white/30 text-xs uppercase tracking-wider font-semibold text-center">Версия</span>
-            <span className="text-white/30 text-xs uppercase tracking-wider font-semibold text-center">Phantom Tunnel</span>
+            <span className="text-white/30 text-xs uppercase tracking-wider font-semibold text-center">Phantom Hive Tunnel</span>
             <span className="text-white/30 text-xs uppercase tracking-wider font-semibold text-center">Smart Path</span>
           </div>
 
@@ -512,10 +512,10 @@ function CTASection() {
       </div>
       <div className="relative z-10 max-w-[800px] mx-auto px-6 lg:px-10 text-center">
         <h2 className="text-3xl lg:text-[56px] font-bold text-white leading-tight mb-6">
-          Готовы к <span className="text-gradient">свободе</span>?
+          Следуй за <span className="text-gradient">белым кроликом</span>
         </h2>
         <p className="text-white/50 text-lg mb-10 max-w-lg mx-auto">
-          Скачайте Phantom прямо сейчас и получите неограниченный доступ к контенту
+          Скачайте pHive прямо сейчас и получите неограниченный доступ к контенту
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <Link

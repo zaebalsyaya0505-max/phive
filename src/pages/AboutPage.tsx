@@ -45,7 +45,7 @@ export default function AboutPage() {
   ];
 
   const techStack = [
-    { name: 'Rust', desc: 'Ядро сети, Phantom Tunnel, криптография', color: '#DEA584' },
+    { name: 'Rust', desc: 'Ядро сети, Phantom Hive Tunnel, криптография', color: '#DEA584' },
     { name: 'Kotlin', desc: 'Android приложение', color: '#7F52FF' },
     { name: 'Jetpack Compose', desc: 'UI фреймворк', color: '#3DDC84' },
     { name: 'TON', desc: 'Блокчейн и платежи', color: '#0088CC' },
@@ -75,7 +75,7 @@ export default function AboutPage() {
               <span className="text-gradient">свободный интернет</span>
             </h1>
             <p className="text-white/50 text-lg lg:text-xl max-w-2xl leading-relaxed">
-              Phantom родился из идеи, что доступ к информации — это базовое право человека.
+              pHive родился из идеи, что доступ к информации — это базовое право человека.
               Мы создаём децентрализованную инфраструктуру на базе P2P Mesh,
               которая делает интернет свободным, приватным и устойчивым к ограничениям.
             </p>
@@ -141,7 +141,7 @@ export default function AboutPage() {
                 <div className="space-y-6">
                   {[
                     { icon: Network, label: 'P2P Mesh Overlay', desc: 'Децентрализованная маршрутизация' },
-                    { icon: FileKey, label: 'Phantom Tunnel', desc: 'TLS 1.4 + пост-квантовая криптография' },
+                    { icon: FileKey, label: 'Phantom Hive Tunnel', desc: 'TLS 1.4 + пост-квантовая криптография' },
                     { icon: Radio, label: 'Smart Path', desc: 'Адаптивная маршрутизация трафика' },
                     { icon: RefreshCw, label: 'Auto-Updater', desc: 'P2Mesh-распространение обновлений' },
                   ].map((item) => (

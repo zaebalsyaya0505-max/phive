@@ -47,7 +47,7 @@ export default function PartnersPage() {
     {
       icon: Code,
       title: 'API для разработчиков',
-      desc: 'Интегрируйте Phantom в свои приложения. REST API для управления Phantom Tunnel, P2P Mesh-узлами и платежами.',
+      desc: 'Интегрируйте pHive в свои приложения. REST API для управления Phantom Hive Tunnel, P2P Mesh-узлами и платежами.',
       benefits: ['REST API', 'WebSocket events', 'SDK для Android/iOS'],
       cta: 'Документация API',
     },
@@ -61,7 +61,7 @@ const phantom = new PhantomSDK({
   network: 'mainnet'
 });
 
-// Подключение Phantom Tunnel
+// Подключение Phantom Hive Tunnel
 await phantom.tunnel.connect({
   region: 'europe',
   protocol: 'wireguard'
@@ -144,7 +144,7 @@ console.log('Transaction:', tx.hash);`;
               </h2>
               <p className="text-white/50 text-lg leading-relaxed mb-8">
                 Полный доступ к функциям Phantom через REST API и JavaScript SDK.
-                Управляйте Phantom Tunnel, P2P Mesh-узлами и платежами программно.
+                Управляйте Phantom Hive Tunnel, P2P Mesh-узлами и платежами программно.
               </p>
               <div className="grid grid-cols-2 gap-4">
                 {[
