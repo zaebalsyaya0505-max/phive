@@ -1,13 +1,17 @@
 # Supabase Integration Guide
 
-Инструкция по подключению и настройке Supabase базы данных для pHive.
+Полная инструкция по подключению и настройке Supabase базы данных для pHive.
 
-## 1. Создание проекта Supabase
+## Статус интеграции
 
-1. Перейдите на [supabase.com](https://supabase.com)
-2. Нажмите "Start your project"
-3. Создайте новый проект или используйте существующий
-4. Скопируйте `Project URL` и `Anon Key` (находятся в Settings → API)
+| Компонент | Статус | Описание |
+|-----------|--------|---------|
+| Supabase URL | ✅ | `https://tcolzpthxqzwagextzdq.supabase.co` |
+| Publishable Key | ✅ | `sb_publishable_NAxjAscfz81Efi1PnlkPzw_EgrdQ9Kp` |
+| Заметки (CRUD) | ✅ | Полностью функционально |
+| Аутентификация | ⏳ | Требует `npm install @supabase/supabase-js` |
+| UI компоненты | ⏳ | Требует `npx shadcn@latest add @supabase/supabase-client-react-router` |
+| Storage | ⏳ | Будет добавлено |
 
 ## 2. Создание таблицы в Supabase
 
