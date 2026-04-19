@@ -88,7 +88,7 @@ export default function DownloadPage() {
           <div className="animate-in opacity-0 translate-y-8 transition-all duration-700">
             <Download className="w-12 h-12 text-phantom-purple mx-auto mb-6" />
             <h1 className="text-4xl lg:text-[72px] font-bold text-white leading-[0.95] tracking-tight mb-6">
-              Скачать <span className="text-gradient">pHive</span>
+              Следуй за <span className="text-gradient">белым кроликом</span>
             </h1>
             <p className="text-white/50 text-lg max-w-xl mx-auto mb-4">
               Последняя версия: 2.4.1 от 15 апреля 2026
