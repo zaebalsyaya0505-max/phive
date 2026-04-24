@@ -127,15 +127,29 @@ function getStoredToken(): string | null {
 function setStoredToken(token: string | null, user: TonUser | null) {
   try {
     if (token && user) {
+      // Store token in localStorage with metadata (Note: for production, use httpOnly cookies)
+      // localStorage is XSS-vulnerable; consider using:
+      // - httpOnly cookies (best for sensitive auth)
+      // - IndexedDB with encryption
+      // - sessionStorage (volatile, cleared on tab close)
       localStorage.setItem(TON_AUTH_TOKEN_KEY, token);
       localStorage.setItem(TON_USER_KEY, JSON.stringify(user));
+      
+      // Add security metadata
+      localStorage.setItem(`${TON_AUTH_TOKEN_KEY}_timestamp`, Date.now().toString());
     } else {
       localStorage.removeItem(TON_AUTH_TOKEN_KEY);
       localStorage.removeItem(TON_USER_KEY);
+      localStorage.removeItem(`${TON_AUTH_TOKEN_KEY}_timestamp`);
     }
   } catch {
     // Storage unavailable - fail silently
+    console.warn('Failed to store auth token - storage unavailable');
   }
+}
+
+function isTokenExpired(expiresAt: number): boolean {
+  return Date.now() > expiresAt;
 }
 
 function getStoredUser(): TonUser | null {

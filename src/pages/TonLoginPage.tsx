@@ -65,20 +65,6 @@ export default function TonLoginPage() {
     setStep("connect");
   }, [disconnect]);
 
-  // Demo wallet addresses for testing
-  const demoWallets = [
-    {
-      label: "Demo Wallet 1",
-      address: "EQD4FPq-PRDieyQKkizFTRtSDyucUIqrj0v_zXJmqaDp6_0t",
-      publicKey: "a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1",
-    },
-    {
-      label: "Demo Wallet 2",
-      address: "EQBDanJhb2JkrKBLXjHqHED93xbWNcP5VPL1np9C_B1p8sFo",
-      publicKey: "b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2",
-    },
-  ];
-
   // Security features display
   const securityFeatures = [
     { icon: Fingerprint, label: "Biometric", desc: "Wallet-based verification" },
