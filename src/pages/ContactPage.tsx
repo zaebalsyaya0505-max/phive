@@ -40,15 +40,15 @@ export default function ContactPage() {
     {
       icon: MessageCircle,
       label: 'Telegram',
-      value: '@phive_support',
-      href: 'https://t.me/phive_support',
+      value: '@phantom_support',
+      href: 'https://t.me/phantom_support',
       desc: 'Ответ за 5 минут',
     },
     {
       icon: Mail,
       label: 'Email',
-      value: 'hello@phive.net',
-      href: 'mailto:hello@phive.net',
+      value: 'hello@phantom.net',
+      href: 'mailto:hello@phantom.net',
       desc: 'Для общих вопросов',
     },
     {

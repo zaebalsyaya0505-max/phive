@@ -1,6 +1,4 @@
 import { Routes, Route } from 'react-router';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/react';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import AdvertisePage from './pages/AdvertisePage';
@@ -10,27 +8,23 @@ import DocsPage from './pages/DocsPage';
 import DownloadPage from './pages/DownloadPage';
 import ContactPage from './pages/ContactPage';
 import BlogPage from './pages/BlogPage';
-import NotesPage from './pages/NotesPage';
+import TonLoginPage from './pages/TonLoginPage';
 
 function App() {
   return (
-    <>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/advertise" element={<AdvertisePage />} />
-          <Route path="/partners" element={<PartnersPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/docs" element={<DocsPage />} />
-          <Route path="/download" element={<DownloadPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/notes" element={<NotesPage />} />
-        </Route>
-      </Routes>
-      <Analytics />
-      <SpeedInsights />
-    </>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/advertise" element={<AdvertisePage />} />
+        <Route path="/partners" element={<PartnersPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/docs" element={<DocsPage />} />
+        <Route path="/download" element={<DownloadPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+      </Route>
+      <Route path="/auth/ton" element={<TonLoginPage />} />
+    </Routes>
   );
 }
 

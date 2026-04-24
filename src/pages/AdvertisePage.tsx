@@ -224,7 +224,7 @@ export default function AdvertisePage() {
                 Рассчитайте <span className="text-gradient">прибыль</span>
               </h2>
               <p className="text-white/50 text-lg mb-8">
-                Используйте калькулятор для оценки потенциальной выручки от рекламной кампании в pHive.
+                Используйте калькулятор для оценки потенциальной выручки от рекламной кампании в Phantom.
               </p>
               <div className="space-y-4">
                 {[
@@ -309,13 +309,13 @@ export default function AdvertisePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
-                title: '***',
+                title: 'Криптобиржа DeFiX',
                 metric: '340% ROI',
-                desc: 'Кампания на CPA-модели привлекла 45K регистраций. Стоимость привлечения на 40% ниже, чем у конкурентов.',
+                desc: 'Кампания на CPA-модели привлекла 45K регистраций. Стоимость привлечения на 40% ниже, чем в Facebook.',
                 tags: ['CPA', 'Крипто', 'СНГ'],
               },
               {
-                title: '***',
+                title: 'Букмекер BetPro',
                 metric: '$280K выручки',
                 desc: 'RevShare кампания за 3 месяца. 80K установок, 25% конверсия в первый депозит.',
                 tags: ['RevShare', 'Ставки', 'Бразилия'],
@@ -427,7 +427,7 @@ export default function AdvertisePage() {
             Свяжитесь с нашим менеджером для обсуждения деталей кампании
           </p>
           <a
-            href="mailto:ads@phive.net"
+            href="mailto:ads@phantom.net"
             className="inline-flex items-center gap-2 px-10 py-5 bg-phantom-purple text-white font-semibold rounded-lg hover:bg-phantom-purple-deep transition-all hover:shadow-glow text-lg"
           >
             Связаться с менеджером

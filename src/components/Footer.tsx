@@ -17,10 +17,10 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { icon: MessageCircle, href: 'https://t.me/phive', label: 'Telegram' },
-  { icon: Twitter, href: 'https://twitter.com/phive', label: 'Twitter' },
-  { icon: Github, href: 'https://github.com/phive', label: 'GitHub' },
-  { icon: Mail, href: 'mailto:hello@phive.net', label: 'Email' },
+  { icon: MessageCircle, href: 'https://t.me/phantom', label: 'Telegram' },
+  { icon: Twitter, href: 'https://twitter.com/phantom', label: 'Twitter' },
+  { icon: Github, href: 'https://github.com/phantom', label: 'GitHub' },
+  { icon: Mail, href: 'mailto:hello@phantom.net', label: 'Email' },
 ];
 
 export default function Footer() {
@@ -33,10 +33,10 @@ export default function Footer() {
             <Link to="/" className="flex items-center gap-2 group mb-4">
               <img
                 src="/images/logo-light.png"
-                alt="pHive"
+                alt="Phantom"
                 className="w-6 h-6 transition-transform group-hover:scale-110"
               />
-              <span className="text-lg font-bold text-white">pHive</span>
+              <span className="text-lg font-bold text-white">Phantom</span>
             </Link>
             <p className="text-white/40 text-sm leading-relaxed mb-6">
               Свобода информации без границ. Децентрализованная медиа-платформа нового поколения.
@@ -96,11 +96,11 @@ export default function Footer() {
             <h4 className="text-white font-semibold text-sm mb-4">Контакты</h4>
             <div className="space-y-3">
               <a
-                href="mailto:hello@phive.net"
+                href="mailto:hello@phantom.net"
                 className="flex items-center gap-2 text-phantom-purple text-sm hover:underline"
               >
                 <Mail className="w-4 h-4" />
-                hello@phive.net
+                hello@phantom.net
               </a>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-phantom-green animate-pulse" />
@@ -113,7 +113,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-white/30 text-sm">
-            2026 pHive. Все права защищены.
+            2026 Phantom. Все права защищены.
           </p>
           <div className="flex items-center gap-6">
             <Link to="/privacy" className="text-white/30 text-sm hover:text-white/50 transition-colors">

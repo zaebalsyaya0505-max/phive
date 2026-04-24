@@ -38,7 +38,7 @@ export default function DownloadPage() {
       version: '2.4.1',
       size: '24 MB',
       req: 'Android 7.0+',
-      features: ['Phantom Hive Tunnel', 'Smart Path', 'P2P Mesh', 'TON кошелёк', 'Автообновление'],
+      features: ['Phantom Tunnel', 'Smart Path', 'P2P Mesh', 'TON кошелёк', 'Автообновление'],
       primary: true,
       url: '#download-android',
     },
@@ -49,7 +49,7 @@ export default function DownloadPage() {
       version: '2.4.0',
       size: '32 MB',
       req: 'iOS 14.0+',
-      features: ['Phantom Hive Tunnel', 'Smart Path', 'P2P Mesh', 'TON кошелёк'],
+      features: ['Phantom Tunnel', 'Smart Path', 'P2P Mesh', 'TON кошелёк'],
       primary: false,
       url: '#download-ios',
     },
@@ -60,7 +60,7 @@ export default function DownloadPage() {
       version: '2.3.2',
       size: '45 MB',
       req: 'Windows 10+',
-      features: ['Phantom Hive Tunnel', 'P2P Mesh', 'TON кошелёк'],
+      features: ['Phantom Tunnel', 'P2P Mesh', 'TON кошелёк'],
       primary: false,
       url: '#download-windows',
     },
@@ -88,7 +88,7 @@ export default function DownloadPage() {
           <div className="animate-in opacity-0 translate-y-8 transition-all duration-700">
             <Download className="w-12 h-12 text-phantom-purple mx-auto mb-6" />
             <h1 className="text-4xl lg:text-[72px] font-bold text-white leading-[0.95] tracking-tight mb-6">
-              Следуй за <span className="text-gradient">белым кроликом</span>
+              Скачать <span className="text-gradient">Phantom</span>
             </h1>
             <p className="text-white/50 text-lg max-w-xl mx-auto mb-4">
               Последняя версия: 2.4.1 от 15 апреля 2026
@@ -172,7 +172,7 @@ export default function DownloadPage() {
                 <h3 className="text-white font-bold text-lg mb-2">Проверьте подлинность</h3>
                 <p className="text-white/50 text-sm mb-4">
                   Всегда проверяйте SHA-256 хеш загруженного файла, чтобы убедиться в его подлинности.
-                  pHive использует цифровые подписи для верификации всех сборок.
+                  Phantom использует цифровые подписи для верификации всех сборок.
                 </p>
                 <div className="flex items-center gap-3 p-4 rounded-xl bg-black/30">
                   <code className="text-phantom-purple text-sm font-mono flex-1 truncate">
