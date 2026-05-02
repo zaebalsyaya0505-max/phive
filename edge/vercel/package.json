@@ -1,0 +1,23 @@
+{
+  "name": "vercel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "local-server.js",
+  "scripts": {
+    "start": "node local-server.js",
+    "check": "node --check local-server.js && node -e \"require('./api/auth/ton/challenge'); require('./api/auth/ton/verify'); require('./api/auth/session'); require('./api/subscription/status'); require('./lib/phantom-auth')\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@ton/crypto": "^3.3.0",
+    "@ton/ton": "^16.2.4",
+    "@vercel/node": "^5.7.13",
+    "express": "^5.2.1",
+    "node-fetch": "^2.7.0",
+    "tweetnacl": "^1.0.3"
+  }
+}

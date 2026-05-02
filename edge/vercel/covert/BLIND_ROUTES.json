@@ -1,0 +1,122 @@
+{
+  "_description": "Blind routing - admin panel accessible without /admin URLs",
+  "_security_note": "All routes appear as legitimate user functionality",
+  "version": "1.0.0",
+  "routing_mode": "decoy_with_hidden_functionality",
+  "routes": [
+    {
+      "decoy_path": "/blog/editor",
+      "decoy_function": "Content editing interface",
+      "hidden_function": "User management dashboard",
+      "auth_trigger": "konami_sequence",
+      "auth_sequence": ["up", "up", "down", "down", "left", "right", "left", "right", "b", "a"],
+      "data_display": {
+        "mode": "hover_easter_eggs",
+        "locations": [
+          {"element": "h1.title", "hover_data": "new_users_count"},
+          {"element": ".sidebar", "hover_data": "active_sessions"},
+          {"element": ".footer", "hover_data": "revenue_today"}
+        ]
+      },
+      "console_api": "_admin.showUsers()",
+      "priority": 1
+    },
+    {
+      "decoy_path": "/help/troubleshooting",
+      "decoy_function": "Help and diagnostics page",
+      "hidden_function": "Analytics and metrics dashboard",
+      "auth_trigger": "query_param",
+      "auth_param": "debug",
+      "auth_value": "diagnostics_42",
+      "data_display": {
+        "mode": "debug_overlay",
+        "sections": [
+          {"label": "Technical Parameters", "data": "ad_metrics"},
+          {"label": "System Logs", "data": "user_registrations"},
+          {"label": "Network Info", "data": "conversion_data"}
+        ]
+      },
+      "console_api": "_admin.showAnalytics()",
+      "priority": 2
+    },
+    {
+      "decoy_path": "/user/settings",
+      "decoy_function": "User profile settings",
+      "hidden_function": "Admin control panel",
+      "auth_trigger": "hidden_button",
+      "auth_element": "#advanced-toggle",
+      "auth_pattern": "triple_click",
+      "data_display": {
+        "mode": "modal_overlay",
+        "trigger": "advanced_mode_enabled"
+      },
+      "console_api": "_admin.showSettings()",
+      "priority": 3
+    },
+    {
+      "decoy_path": "/api/v1/config",
+      "decoy_function": "App configuration endpoint",
+      "hidden_function": "Key exchange + raw data stream",
+      "auth_trigger": "header_token",
+      "auth_header": "x-client-version",
+      "auth_pattern": "v1.0.0-admin",
+      "data_display": {
+        "mode": "headless_api",
+        "content_type": "application/json"
+      },
+      "console_api": "fetch('/api/v1/config').then(r => r.json())",
+      "priority": 4
+    },
+    {
+      "decoy_path": "/",
+      "decoy_function": "Landing page",
+      "hidden_function": "Console-only admin (no UI)",
+      "auth_trigger": "konami_sequence_variant",
+      "auth_sequence": ["ctrl", "shift", "a"],
+      "data_display": {
+        "mode": "console_only",
+        "api_namespace": "_admin",
+        "commands": [
+          "_admin.showUsers()",
+          "_admin.showRevenue()",
+          "_admin.showConversions()",
+          "_admin.exportData()",
+          "_admin.toggleDebug()"
+        ]
+      },
+      "console_api": "_admin",
+      "priority": 5
+    }
+  ],
+  "auth_methods": {
+    "konami_sequence": {
+      "type": "keyboard_sequence",
+      "timeout_ms": 5000,
+      "reset_on_error": true
+    },
+    "query_param": {
+      "type": "url_parameter",
+      "param_name": "view",
+      "param_value": "hidden",
+      "redirect_to_clean": true
+    },
+    "hidden_button": {
+      "type": "dom_interaction",
+      "element_selector": ".logo",
+      "click_count": 5,
+      "time_window_ms": 2000
+    },
+    "header_token": {
+      "type": "http_header",
+      "header_name": "x-admin-token",
+      "value_encoding": "base64"
+    }
+  },
+  "ui_constraints": {
+    "no_admin_labels": true,
+    "no_dashboard_references": true,
+    "all_metrics_masked_as_debug": true,
+    "no_explicit_login_form": true,
+    "console_logs_only_for_admin": true
+  }
+}
