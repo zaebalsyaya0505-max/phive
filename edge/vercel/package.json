@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node local-server.js",
     "check": "node --check local-server.js && node -e \"require('./api/auth/ton/challenge'); require('./api/auth/ton/verify'); require('./api/auth/session'); require('./api/subscription/status'); require('./lib/phantom-auth')\"",
+    "build": "echo \"skip build\"",
+    "vercel-build": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
