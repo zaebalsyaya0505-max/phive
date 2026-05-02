@@ -5,10 +5,7 @@
       "destination": "https://YOUR_ACTUAL_SERVER_DOMAIN/:match*"
     }
   ],
-  "env": {
-    "PHIVE_SECRET_KEY": "@phive_secret_key",
-    "ALLOWED_ORIGIN": "@allowed_origin"
-  },
+  
   "headers": [
     {
       "source": "/api/:path*",
