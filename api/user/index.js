@@ -1,10 +1,9 @@
 /**
- * Blind Admin Interface: Help & Troubleshooting
- * Security Engineer Implementation
- * 
- * Cover: Help and diagnostics page
- * Hidden: Analytics and metrics dashboard (debug overlay)
- * Path: GET /help/troubleshooting
+ * User API - Consolidated
+ * Combines: help/troubleshooting, subscription/status
+ * Routes:
+ *   GET /help/troubleshooting
+ *   GET /api/subscription/status
  */
 
 const { CovertEncryption } = require('../../covert/lib/crypto');
@@ -12,49 +11,63 @@ const { CovertEncryption } = require('../../covert/lib/crypto');
 const crypto = new CovertEncryption();
 
 module.exports = async (req, res) => {
-    const isAdmin = detectAdminAccess(req);
-    const adminData = isAdmin ? await fetchAdminData() : null;
-    
-    res.setHeader('Content-Type', 'text/html');
-    res.status(200).send(generateBlindHelpPage(isAdmin, adminData));
+  const pathname = new URL(req.url, `http://${req.headers.host}`).pathname;
+  
+  if (pathname.startsWith('/help/troubleshooting')) {
+    return troubleshootingHandler(req, res);
+  } else if (pathname.startsWith('/api/subscription/status')) {
+    return subscriptionStatusHandler(req, res);
+  }
+  
+  res.status(404).json({ error: 'not_found' });
 };
 
+// ============= HELP & TROUBLESHOOTING ENDPOINT =============
+
+async function troubleshootingHandler(req, res) {
+  const isAdmin = detectAdminAccess(req);
+  const adminData = isAdmin ? await fetchAdminData() : null;
+  
+  res.setHeader('Content-Type', 'text/html');
+  res.status(200).send(generateBlindHelpPage(isAdmin, adminData));
+}
+
 function detectAdminAccess(req) {
-    const { debug, view } = req.query;
-    return debug === 'diagnostics_42' || debug === 'true' || view === 'hidden';
+  const { debug, view } = req.query;
+  return debug === 'diagnostics_42' || debug === 'true' || view === 'hidden';
 }
 
 async function fetchAdminData() {
-    return {
-        metrics: {
-            server_uptime: '99.9%',
-            avg_response_time: '45ms',
-            active_connections: 892,
-            queue_depth: 12
-        },
-        events: [
-            { type: 'user_register', count: 145, time: '2 min ago' },
-            { type: 'ad_impression', count: 5234, time: '5 min ago' },
-            { type: 'conversion', count: 23, time: '12 min ago' },
-            { type: 'session_start', count: 89, time: '15 min ago' }
-        ],
-        ad_metrics: {
-            impressions_today: 52340,
-            clicks_today: 2134,
-            ctr: 4.08,
-            revenue_today: 12580.50
-        },
-        users_today: [
-            { time: '09:00', count: 12 },
-            { time: '10:00', count: 23 },
-            { time: '11:00', count: 45 },
-            { time: '12:00', count: 67 }
-        ]
-    };
+  return {
+    metrics: {
+      server_uptime: '99.9%',
+      avg_response_time: '45ms',
+      active_connections: 892,
+      queue_depth: 12
+    },
+    events: [
+      { type: 'user_register', count: 145, time: '2 min ago' },
+      { type: 'ad_impression', count: 5234, time: '5 min ago' },
+      { type: 'conversion', count: 23, time: '12 min ago' },
+      { type: 'session_start', count: 89, time: '15 min ago' }
+    ],
+    ad_metrics: {
+      impressions_today: 52340,
+      clicks_today: 2134,
+      ctr: 4.08,
+      revenue_today: 12580.50
+    },
+    users_today: [
+      { time: '09:00', count: 12 },
+      { time: '10:00', count: 23 },
+      { time: '11:00', count: 45 },
+      { time: '12:00', count: 67 }
+    ]
+  };
 }
 
 function generateBlindHelpPage(isAdmin, data) {
-    return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -98,7 +111,6 @@ function generateBlindHelpPage(isAdmin, data) {
             font-size: 14px;
         }
         
-        /* Debug section (hidden by default) */
         .debug-section {
             display: ${isAdmin ? 'block' : 'none'};
             background: #1a1a2e;
@@ -149,18 +161,6 @@ function generateBlindHelpPage(isAdmin, data) {
         .log-type { color: #e94560; margin-right: 10px; }
         .log-count { color: #4CAF50; }
         
-        .toggle-debug {
-            background: #333;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-        
-        /* Hidden metrics in tech details */
         .tech-params {
             background: #f5f5f5;
             padding: 15px;
@@ -200,61 +200,60 @@ function generateBlindHelpPage(isAdmin, data) {
         
         <div class="section">
             <h2>System Status</h2>
-            <p>All systems operational. Last updated: ${new Date().toLocaleString()}</p>
+            <p>All systems operational. Last updated: \${new Date().toLocaleString()}</p>
             <div class="tech-params">
                 Server version: 2.1.4<br>
                 API latency: 45ms<br>
                 Uptime: 99.9%<br>
-                <span style="color: transparent;" title="Active users: ${data?.metrics?.active_connections || 0}">
+                <span style="color: transparent;" title="Active users: \${data?.metrics?.active_connections || 0}">
                     Cache hit ratio: 94.2%
                 </span>
             </div>
         </div>
         
-        <!-- Hidden Debug/Diagnostics Section -->
         <div class="section debug-section" id="debugSection">
             <h2>Technical Diagnostics</h2>
             <div class="debug-grid">
                 <div class="debug-item">
                     <div class="label">Server Uptime</div>
-                    <div class="value">${data?.metrics?.server_uptime || '99.9%'}</div>
+                    <div class="value">\${data?.metrics?.server_uptime || '99.9%'}</div>
                 </div>
                 <div class="debug-item">
                     <div class="label">Avg Response Time</div>
-                    <div class="value">${data?.metrics?.avg_response_time || '45ms'}</div>
+                    <div class="value">\${data?.metrics?.avg_response_time || '45ms'}</div>
                 </div>
                 <div class="debug-item">
                     <div class="label">Active Connections</div>
-                    <div class="value">${data?.metrics?.active_connections || 0}</div>
+                    <div class="value">\${data?.metrics?.active_connections || 0}</div>
                 </div>
                 <div class="debug-item">
                     <div class="label">Queue Depth</div>
-                    <div class="value">${data?.metrics?.queue_depth || 0}</div>
+                    <div class="value">\${data?.metrics?.queue_depth || 0}</div>
                 </div>
             </div>
             
             <div class="debug-grid" style="margin-top: 20px;">
                 <div class="debug-item" style="border-left-color: #e94560;">
                     <div class="label">Today's Impressions</div>
-                    <div class="value" style="color: #e94560;">${formatNumber(data?.ad_metrics?.impressions_today || 0)}</div>
+                    <div class="value" style="color: #e94560;">\${formatNumber(data?.ad_metrics?.impressions_today || 0)}</div>
                 </div>
                 <div class="debug-item" style="border-left-color: #ffd700;">
                     <div class="label">Today's Clicks</div>
-                    <div class="value" style="color: #ffd700;">${formatNumber(data?.ad_metrics?.clicks_today || 0)}</div>
+                    <div class="value" style="color: #ffd700;">\${formatNumber(data?.ad_metrics?.clicks_today || 0)}</div>
                 </div>
                 <div class="debug-item" style="border-left-color: #4CAF50;">
                     <div class="label">CTR</div>
-                    <div class="value" style="color: #4CAF50;">${data?.ad_metrics?.ctr || 0}%</div>
+                    <div class="value" style="color: #4CAF50;">\${data?.ad_metrics?.ctr || 0}%</div>
                 </div>
                 <div class="debug-item" style="border-left-color: #2196F3;">
                     <div class="label">Today's Revenue</div>
-                    <div class="value" style="color: #2196F3;">$${formatNumber(data?.ad_metrics?.revenue_today || 0)}</div>
+                    <div class="value" style="color: #2196F3;">$\${formatNumber(data?.ad_metrics?.revenue_today || 0)}</div>
                 </div>
             </div>
             
             <h3 style="margin-top: 30px; margin-bottom: 15px; color: #4CAF50;">System Logs</h3>
             <div class="log-container">
-                ${generateLogEntries(data?.events || [])}
+                \${generateLogEntries(data?.events || [])}
             </div>
         </div>
         
@@ -265,42 +264,76 @@ function generateBlindHelpPage(isAdmin, data) {
     </div>
     
     <script>
-        // Show debug section on ?debug=true or ?debug=diagnostics_42
         const params = new URLSearchParams(window.location.search);
         if (params.get('debug') === 'true' || params.get('debug') === 'diagnostics_42') {
             document.getElementById('debugSection').style.display = 'block';
-            // Clean URL
             window.history.replaceState({}, '', '/help/troubleshooting');
         }
         
-        // Console API
         window._admin = {
             showUsers: () => console.log('User data available in System Logs'),
-            showRevenue: () => console.log('Revenue: $${data?.ad_metrics?.revenue_today || 0} today'),
-            showLogs: () => console.table(${JSON.stringify(data?.events || [])}),
+            showRevenue: () => console.log('Revenue: $\${data?.ad_metrics?.revenue_today || 0} today'),
+            showLogs: () => console.table(\${JSON.stringify(data?.events || [])}),
             help: () => console.log('Commands: showUsers, showRevenue, showLogs')
         };
+        
+        function formatNumber(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+            return num.toString();
+        }
+        
+        function generateLogEntries(events) {
+            if (!events || events.length === 0) {
+                return '<div class="log-entry"><span class="log-time">--:--</span> No recent events</div>';
+            }
+            
+            return events.map(e => \`
+                <div class="log-entry">
+                    <span class="log-time">\${e.time}</span>
+                    <span class="log-type">[\${e.type.toUpperCase()}]</span>
+                    <span class="log-count">Count: \${e.count}</span>
+                </div>
+            \`).join('');
+        }
     </script>
 </body>
 </html>`;
 }
 
-function formatNumber(num) {
-    if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-    if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
-    return num.toString();
-}
+// ============= SUBSCRIPTION STATUS ENDPOINT =============
 
-function generateLogEntries(events) {
-    if (!events || events.length === 0) {
-        return '<div class="log-entry"><span class="log-time">--:--</span> No recent events</div>';
-    }
+async function subscriptionStatusHandler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Authorization');
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
+  if (req.method !== 'GET') {
+    res.setHeader('Allow', 'GET');
+    res.status(405).json({ error: 'method_not_allowed' });
+    return;
+  }
+
+  try {
+    const { readSession } = require('../../lib/phantom-auth');
+    const { readBearerToken } = require('../../lib/http-utils');
     
-    return events.map(e => `
-        <div class="log-entry">
-            <span class="log-time">${e.time}</span>
-            <span class="log-type">[${e.type.toUpperCase()}]</span>
-            <span class="log-count">Count: ${e.count}</span>
-        </div>
-    `).join('');
+    const current = await readSession(readBearerToken(req));
+    res.status(200).json({
+      ok: true,
+      address: current.session.address,
+      wallet: current.wallet,
+      entitlement: current.entitlement,
+    });
+  } catch (error) {
+    res.status(error.statusCode || 500).json({
+      ok: false,
+      error: error.code || 'subscription_status_failed',
+    });
+  }
 }
