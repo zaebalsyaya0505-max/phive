@@ -57,10 +57,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const requestBody = await readRawBody(req);
   const upstreamHeaders = buildUpstreamHeaders(req, requestBody.length);
 
-  const upstreamResponse = await fetch(targetUrl, {
+  const upstreamResponse = await fetch(targetUrl.toString(), {
     method: upstreamMethod,
-    headers: upstreamHeaders,
-    body: bodyAllowed(upstreamMethod) ? requestBody : undefined,
+    headers: upstreamHeaders as unknown as HeadersInit,
+    body: bodyAllowed(upstreamMethod) ? (requestBody as unknown as BodyInit) : undefined,
     redirect: "manual",
   });
 

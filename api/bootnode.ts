@@ -115,7 +115,7 @@ export default async function handler(req: Request) {
       const validation = PeerRegistrationSchema.safeParse(body);
       if (!validation.success) {
         return new Response(
-          JSON.stringify({ error: 'Invalid peer data', details: validation.error.errors }),
+          JSON.stringify({ error: 'Invalid peer data', details: validation.error.issues }),
           { status: 422, headers }
         );
       }
