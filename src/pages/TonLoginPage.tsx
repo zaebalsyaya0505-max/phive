@@ -13,6 +13,25 @@ import {
 import ParticleNetwork from "../components/ParticleNetwork";
 import { useTonAuth } from "../hooks/useTonAuth";
 
+interface DemoWallet {
+  label: string;
+  address: string;
+  publicKey: string;
+}
+
+const demoWallets: DemoWallet[] = [
+  {
+    label: "Wallet 1",
+    address: "UQDRblFMJF5ZrXnzBbPJ6sZYxKfpWk1E5CQ-d2VlPSqfkOwE",
+    publicKey: "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+  },
+  {
+    label: "Wallet 2",
+    address: "UQCTn7agoubqGyusmD4s5gY9XPSo0UtKwsCVLUfHnS1rVQny",
+    publicKey: "fedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210"
+  }
+];
+
 export default function TonLoginPage() {
   const navigate = useNavigate();
   const { 
@@ -21,19 +40,13 @@ export default function TonLoginPage() {
     isConnecting, 
     error, 
     connect, 
-    disconnect,
-    refreshSession,
-    challenge 
+    disconnect
   } = useTonAuth();
   
   const [walletAddress, setWalletAddress] = useState("");
   const [publicKey, setPublicKey] = useState("");
   const [showPublicKey, setShowPublicKey] = useState(false);
   const [step, setStep] = useState<"connect" | "sign" | "complete">("connect");
-  const [securityInfo, setSecurityInfo] = useState<{
-    nonce: string;
-    expiresAt: number;
-  } | null>(null);
 
   // Update step based on connection state
   useEffect(() => {

@@ -148,9 +148,6 @@ function setStoredToken(token: string | null, user: TonUser | null) {
   }
 }
 
-function isTokenExpired(expiresAt: number): boolean {
-  return Date.now() > expiresAt;
-}
 
 function getStoredUser(): TonUser | null {
   try {
