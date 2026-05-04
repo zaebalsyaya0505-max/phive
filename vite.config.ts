@@ -11,6 +11,9 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      "@/lib/utils": path.resolve(__dirname, "./src/shared/lib/utils"),
+      "@/lib/supabase": path.resolve(__dirname, "./src/shared/lib/supabase"),
+      "@/hooks": path.resolve(__dirname, "./src/shared/hooks"),
       "@": path.resolve(__dirname, "./src"),
     },
   },

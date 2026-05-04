@@ -24,8 +24,7 @@ class CovertEncryption {
      */
     _deriveKey(keyStr) {
         if (!keyStr) {
-            // Fallback key for development (NOT FOR PRODUCTION)
-            return crypto.scryptSync('covert-dev-key', 'salt', 32);
+            throw new Error('COVERT_MASTER_KEY environment variable is required in production');
         }
         // Use provided key or hash it to 32 bytes
         const key = Buffer.from(keyStr, 'hex');

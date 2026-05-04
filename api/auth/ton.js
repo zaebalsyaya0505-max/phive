@@ -6,8 +6,8 @@
  *   POST /api/auth/ton/verify
  */
 
-const { issueTonChallenge, verifyTonProof } = require('../../../lib/phantom-auth');
-const { METHOD_NOT_ALLOWED, allowMethods, firstHeader, getRequestHost, handleCors, json, setSessionCookie } = require('../../../lib/http-utils');
+const { issueTonChallenge, verifyTonProof } = require('../../../covert/lib/phantom-auth');
+const { METHOD_NOT_ALLOWED, allowMethods, firstHeader, getRequestHost, handleCors, json, setSessionCookie } = require('../../../covert/lib/http-utils');
 
 module.exports = async (req, res) => {
   const pathname = new URL(req.url, `http://${req.headers.host}`).pathname;

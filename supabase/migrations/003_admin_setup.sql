@@ -1,0 +1,35 @@
+-- ============================================================
+-- ADMIN USER SETUP
+-- Run AFTER creating your admin user via /auth/signup
+-- ============================================================
+--
+-- EASIEST WAY to become admin:
+--
+-- 1. Go to /auth/signup and create an account
+-- 2. Open Supabase Dashboard → SQL Editor
+-- 3. Run this query (replace with YOUR email):
+--
+--    UPDATE profiles SET role = 'admin'
+--    WHERE email = 'your-email@example.com';
+--
+-- That's it. Log out and log back in.
+-- ============================================================
+
+-- Optional: Auto-promote specific email to admin on signup
+-- Uncomment and set your email before running:
+--
+-- CREATE OR REPLACE FUNCTION public.handle_new_user()
+-- RETURNS TRIGGER AS $$
+-- BEGIN
+--   INSERT INTO public.profiles (id, email, role)
+--   VALUES (
+--     NEW.id,
+--     NEW.email,
+--     CASE
+--       WHEN NEW.email = 'your-email@example.com' THEN 'admin'
+--       ELSE COALESCE(NEW.raw_user_meta_data->>'role', 'user')
+--     END
+--   );
+--   RETURN NEW;
+-- END;
+-- $$ LANGUAGE plpgsql SECURITY DEFINER;

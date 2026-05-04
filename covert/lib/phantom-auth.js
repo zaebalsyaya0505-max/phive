@@ -734,11 +734,19 @@ function normalizeDomain(value) {
 }
 
 function getAuthSecret() {
-  return process.env.TON_AUTH_SECRET?.trim() || "dev-ton-auth-secret-change-me";
+  const secret = process.env.TON_AUTH_SECRET?.trim();
+  if (!secret) {
+    throw new Error('TON_AUTH_SECRET environment variable is required');
+  }
+  return secret;
 }
 
 function getSessionSecret() {
-  return process.env.TON_SESSION_SECRET?.trim() || getAuthSecret();
+  const secret = process.env.TON_SESSION_SECRET?.trim();
+  if (!secret) {
+    throw new Error('TON_SESSION_SECRET environment variable is required');
+  }
+  return secret;
 }
 
 function normalizeRuleType(value) {

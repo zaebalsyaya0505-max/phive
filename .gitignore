@@ -6,15 +6,21 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-.vercel
+
+# Environment
+.env
+.env.local
 .env*.local
 
+# Build
 node_modules
 dist
 dist-ssr
-*.local
 
-# Editor directories and files
+# Vercel
+.vercel
+
+# Editor
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -24,7 +30,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-.env.local
-.env
-.vercel
-.env*.local

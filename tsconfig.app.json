@@ -12,7 +12,10 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ]
+      ],
+      "@/lib/utils": ["./src/shared/lib/utils"],
+      "@/lib/supabase/*": ["./src/shared/lib/supabase/*"],
+      "@/hooks/*": ["./src/shared/hooks/*"]
     },
     /* Bundler mode */
     "moduleResolution": "bundler",

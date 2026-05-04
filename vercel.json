@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/p2p-relay/:match*",
-      "destination": "https://YOUR_ACTUAL_SERVER_DOMAIN/:match*"
+      "destination": "https://${P2P_RELAY_SERVER_DOMAIN}/:match*"
     }
   ],
   

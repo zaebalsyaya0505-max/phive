@@ -1,5 +1,5 @@
-const { readSession } = require("../../lib/phantom-auth");
-const { METHOD_NOT_ALLOWED, allowMethods, clearSessionCookie, getRequestHost, handleCors, json, readBearerToken } = require("../../lib/http-utils");
+const { readSession } = require("../../covert/lib/phantom-auth");
+const { METHOD_NOT_ALLOWED, allowMethods, clearSessionCookie, getRequestHost, handleCors, json, readBearerToken } = require("../../covert/lib/http-utils");
 
 module.exports = async function sessionHandler(req, res) {
   if (handleCors(req, res, ["GET", "DELETE", "OPTIONS"])) {
