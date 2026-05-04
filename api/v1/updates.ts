@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
-import { withRateLimit, denyRateLimited } from "./middleware/rate-limit.js";
+import { kv } from "@vercel/kv";
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
@@ -23,14 +23,38 @@ function setSecurityHeaders(res: VercelResponse) {
   res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
 }
 
+async function rateLimit(
+  req: VercelRequest,
+  res: VercelResponse,
+  max: number,
+  windowMs: number,
+  prefix: string
+): Promise<boolean> {
+  const ip = (req.headers["x-forwarded-for"] as string)?.split(",")[0] || req.socket.remoteAddress || "unknown";
+  const key = `${prefix}:${ip}`;
+  try {
+    const current = await kv.incr(key);
+    if (current === 1) await kv.expire(key, Math.floor(windowMs / 1000));
+    const remaining = Math.max(0, max - current);
+    const reset = Date.now() + (await kv.ttl(key) || windowMs / 1000) * 1000;
+    res.setHeader("X-RateLimit-Limit", String(max));
+    res.setHeader("X-RateLimit-Remaining", String(remaining));
+    res.setHeader("X-RateLimit-Reset", String(Math.floor(reset / 1000)));
+    if (current > max) {
+      res.setHeader("Retry-After", "60");
+      res.status(429).json({ error: "rate_limit_exceeded" });
+      return false;
+    }
+    return true;
+  } catch {
+    return true;
+  }
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   setSecurityHeaders(res);
 
-  const rate = await withRateLimit(req, res, { max: 200, windowMs: 60000, keyPrefix: "updates" });
-  if (!rate.allowed) {
-    denyRateLimited(res);
-    return;
-  }
+  if (!await rateLimit(req, res, 200, 60000, "updates")) return;
 
   if (req.method !== "GET") {
     res.setHeader("Allow", "GET");
