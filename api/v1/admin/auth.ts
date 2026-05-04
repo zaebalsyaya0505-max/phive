@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createHmac, timingSafeEqual } from "crypto";
-import { withRateLimit, denyRateLimited } from "../middleware/rate-limit";
+import { withRateLimit, denyRateLimited } from "../middleware/rate-limit.js";
 
 const ADMIN_SECRET = process.env.ADMIN_SECRET_KEY;
 
