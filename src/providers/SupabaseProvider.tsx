@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import { supabase } from '@/shared/lib/supabase/client';
+import { supabase, isSupabaseConfigured } from '@/shared/lib/supabase/client';
 import type { Session, User } from '@supabase/supabase-js';
 
 const TON_AUTH_TOKEN_KEY = 'phantom_ton_token';
@@ -147,6 +147,20 @@ export function SupabaseProvider({ children }: SupabaseProviderProps) {
     setIsTonAuth(false);
     await supabase.auth.signOut();
   };
+
+  if (!isSupabaseConfigured()) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-red-500/10 border border-red-500/50 p-6 rounded-xl text-center">
+          <h2 className="text-xl font-bold text-red-400 mb-2">Configuration Error</h2>
+          <p className="text-white/70 mb-4">Supabase URL or Key is missing.</p>
+          <p className="text-xs text-white/40">
+            Please add <code className="bg-white/10 px-1 rounded">VITE_SUPABASE_URL</code> and <code className="bg-white/10 px-1 rounded">VITE_SUPABASE_ANON_KEY</code> to Vercel Environment Variables.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <SupabaseContext.Provider value={{ session, user, loading, role, signOut, isTonAuth, tonUser }}>
