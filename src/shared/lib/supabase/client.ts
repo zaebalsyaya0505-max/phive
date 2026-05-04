@@ -1,81 +1,34 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || import.meta.env.SUPABASE_ANON_KEY;
 
-if (!supabaseUrl || !supabaseKey) {
-  throw new Error(
-    'Missing Supabase URL or Anon Key. Please check your environment variables.'
-  );
-}
+let supabaseInstance: SupabaseClient | null = null;
+let configMissing = false;
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
-
-/**
- * Fetch notes for the current user only
- */
-export async function getNotes(userId: string) {
-  const { data, error } = await supabase
-    .from('notes')
-    .select()
-    .eq('user_id', userId)
-    .order('id', { ascending: false });
-
-  if (error) {
-    console.error('Error fetching notes:', error);
-    throw error;
+function initSupabase(): SupabaseClient {
+  if (supabaseInstance) return supabaseInstance;
+  if (!supabaseUrl || !supabaseKey) {
+    configMissing = true;
+    console.warn('[Supabase] Missing VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY');
+    supabaseInstance = createClient('https://placeholder.supabase.co', 'placeholder');
+    return supabaseInstance;
   }
-
-  return data;
+  supabaseInstance = createClient(supabaseUrl, supabaseKey);
+  return supabaseInstance;
 }
 
-/**
- * Create a new note tied to the current user
- */
-export async function createNote(title: string, userId: string) {
-  const { data, error } = await supabase
-    .from('notes')
-    .insert([{ title, user_id: userId }])
-    .select();
-
-  if (error) {
-    console.error('Error creating note:', error);
-    throw error;
-  }
-
-  return data;
+export function getSupabase(): SupabaseClient {
+  return initSupabase();
 }
 
-/**
- * Delete a note by ID — only if owned by user
- */
-export async function deleteNote(id: number, userId: string) {
-  const { error } = await supabase
-    .from('notes')
-    .delete()
-    .eq('id', id)
-    .eq('user_id', userId);
-
-  if (error) {
-    console.error('Error deleting note:', error);
-    throw error;
-  }
+export function isSupabaseConfigured(): boolean {
+  return !configMissing && !!supabaseUrl && !!supabaseKey;
 }
 
-/**
- * Update a note
- */
-export async function updateNote(id: number, title: string) {
-  const { data, error } = await supabase
-    .from('notes')
-    .update({ title })
-    .eq('id', id)
-    .select();
-
-  if (error) {
-    console.error('Error updating note:', error);
-    throw error;
-  }
-
-  return data;
-}
+export const supabase = {
+  from: (...args: any[]) => getSupabase().from(...args),
+  auth: getSupabase().auth,
+  channel: (...args: any[]) => getSupabase().channel(...args),
+  rpc: (...args: any[]) => getSupabase().rpc(...args),
+};
