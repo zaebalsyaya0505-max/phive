@@ -27,6 +27,8 @@ interface AdCampaign {
   priority: number;
   weight: number;
   is_internal: boolean;
+  start_date: string | null;
+  end_date: string | null;
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -42,7 +44,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     let query = sb
       .from("ad_campaigns")
-      .select("id, name, type, image_url, title, description, click_url, width, height, priority, weight, is_internal")
+      .select("id, name, type, image_url, title, description, click_url, width, height, priority, weight, is_internal, start_date, end_date")
       .eq("is_active", true)
       .order("priority", { ascending: false })
       .order("weight", { ascending: false });
