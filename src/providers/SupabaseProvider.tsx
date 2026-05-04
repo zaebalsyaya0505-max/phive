@@ -78,6 +78,9 @@ export function SupabaseProvider({ children }: SupabaseProviderProps) {
         setRole(userRole);
       }
       setLoading(false);
+    }).catch(() => {
+      // Ignore lock race conditions - known Supabase JS client bug
+      setLoading(false);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
