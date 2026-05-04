@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import { supabase } from '@/shared/lib/supabase/client';
 import { Shield, Eye, EyeOff, ArrowLeft, Mail, Lock } from 'lucide-react';
@@ -16,14 +16,9 @@ export default function AdminLoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState<'supabase' | 'code'>('supabase');
+  const [userId, setUserId] = useState<string | null>(null);
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) setStep('code');
-    });
-  }, []);
-
-  const handleSupabaseLogin = async (e: React.FormEvent) => {
+  const handleSupabaseLogin = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -36,30 +31,33 @@ export default function AdminLoginPage() {
 
       if (authError || !data.session) {
         setError(authError?.message || 'Не удалось войти');
+        setLoading(false);
         return;
       }
 
-      const profile = await supabase
+      const { data: profile } = await supabase
         .from('profiles')
         .select('role')
         .eq('id', data.session.user.id)
         .single();
 
-      if (profile?.data?.role !== 'admin') {
+      if (profile?.role !== 'admin') {
         setError('У вас нет прав администратора');
         await supabase.auth.signOut();
+        setLoading(false);
         return;
       }
 
+      setUserId(data.session.user.id);
       setStep('code');
+      setLoading(false);
     } catch {
       setError('Не удалось подключиться к серверу');
-    } finally {
       setLoading(false);
     }
-  };
+  }, [email, password]);
 
-  const handleCodeSubmit = async (e: React.FormEvent) => {
+  const handleCodeSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -85,7 +83,15 @@ export default function AdminLoginPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [code, navigate]);
+
+  const handleSwitchBack = useCallback(async () => {
+    await supabase.auth.signOut();
+    setStep('supabase');
+    setEmail('');
+    setPassword('');
+    setUserId(null);
+  }, []);
 
   return (
     <div className="min-h-screen bg-black pt-24 pb-12 flex items-center justify-center">
@@ -195,12 +201,7 @@ export default function AdminLoginPage() {
             </button>
             <button
               type="button"
-              onClick={async () => {
-                await supabase.auth.signOut();
-                setStep('supabase');
-                setEmail('');
-                setPassword('');
-              }}
+              onClick={handleSwitchBack}
               className="w-full py-2 bg-white/5 text-white/40 hover:text-white/60 rounded-xl text-sm transition-colors"
             >
               Сменить аккаунт
