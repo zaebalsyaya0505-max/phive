@@ -16,8 +16,10 @@ CREATE TABLE IF NOT EXISTS notifications (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
-
+DROP INDEX IF EXISTS idx_notifications_admin;
 CREATE INDEX idx_notifications_admin ON notifications(admin_id);
+
+DROP INDEX IF EXISTS idx_notifications_sent;
 CREATE INDEX idx_notifications_sent ON notifications(is_sent, created_at DESC);
 
 -- 2. App Settings Table (key-value configuration)
@@ -33,6 +35,7 @@ CREATE TABLE IF NOT EXISTS app_settings (
   UNIQUE(category, key)
 );
 
+DROP INDEX IF EXISTS idx_app_settings_category;
 CREATE INDEX idx_app_settings_category ON app_settings(category);
 
 -- 3. Audit Logs (who did what)
@@ -48,8 +51,13 @@ CREATE TABLE IF NOT EXISTS audit_logs (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+DROP INDEX IF EXISTS idx_audit_logs_admin;
 CREATE INDEX idx_audit_logs_admin ON audit_logs(admin_id);
+
+DROP INDEX IF EXISTS idx_audit_logs_action;
 CREATE INDEX idx_audit_logs_action ON audit_logs(action, created_at DESC);
+
+DROP INDEX IF EXISTS idx_audit_logs_entity;
 CREATE INDEX idx_audit_logs_entity ON audit_logs(entity, entity_id);
 
 -- 4. User Bans/Blocks
@@ -63,6 +71,7 @@ CREATE TABLE IF NOT EXISTS user_bans (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+DROP INDEX IF EXISTS idx_user_bans_active;
 CREATE INDEX idx_user_bans_active ON user_bans(user_id, is_active);
 
 -- 5. API Keys (external integrations)
@@ -91,6 +100,7 @@ CREATE TABLE IF NOT EXISTS webhooks (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+DROP INDEX IF EXISTS idx_webhooks_active;
 CREATE INDEX idx_webhooks_active ON webhooks(is_active);
 
 -- 7. System Health Checks
@@ -104,6 +114,7 @@ CREATE TABLE IF NOT EXISTS system_health (
   checked_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+DROP INDEX IF EXISTS idx_system_health_component;
 CREATE INDEX idx_system_health_component ON system_health(component, checked_at DESC);
 
 -- 8. Email Templates
