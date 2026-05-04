@@ -16,7 +16,6 @@ export default function AdminLoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState<'supabase' | 'code'>('supabase');
-  const [userId, setUserId] = useState<string | null>(null);
 
   const handleSupabaseLogin = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,7 +47,11 @@ export default function AdminLoginPage() {
         return;
       }
 
-      setUserId(data.session.user.id);
+      setStep('code');
+      setLoading(false);
+        return;
+      }
+
       setStep('code');
       setLoading(false);
     } catch {
@@ -90,7 +93,6 @@ export default function AdminLoginPage() {
     setStep('supabase');
     setEmail('');
     setPassword('');
-    setUserId(null);
   }, []);
 
   return (
