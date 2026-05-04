@@ -47,47 +47,18 @@ async function fetchRole(userId: string): Promise<string> {
   }
 }
 
-async function bridgeTonToSupabase(address: string, publicKey: string): Promise<boolean> {
-  const safeAddr = address.replace(/[^a-zA-Z0-9]/g, '').slice(0, 48);
-  const safeKey = publicKey.replace(/[^a-zA-Z0-9]/g, '').slice(0, 32);
-  const email = `ton-${safeAddr}@phantom.ton`;
-  const password = `ton_${safeAddr.slice(-8)}_${safeKey}`;
-
-  const { data: existing } = await supabase
-    .from('profiles')
-    .select('id')
-    .eq('ton_address', address)
-    .limit(1);
-
-  if (existing && existing.length > 0) {
-    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
-    if (signInError) {
-      console.warn('[Bridge] TON user exists but Supabase login failed:', signInError.message);
-      return false;
+async function syncTonToProfile(address: string, publicKey: string): Promise<void> {
+  try {
+    const { data: session } = await supabase.auth.getSession();
+    if (session?.session?.user) {
+      await supabase
+        .from('profiles')
+        .update({ ton_address: address, ton_public_key: publicKey })
+        .eq('id', session.session.user.id);
     }
-    return true;
+  } catch {
+    // Profile sync is non-critical — TON auth works standalone
   }
-
-  const { error: signUpError } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: { ton_address: address, ton_public_key: publicKey },
-    },
-  });
-
-  if (signUpError) {
-    console.warn('[Bridge] TON sign up failed:', signUpError.message);
-    return false;
-  }
-
-  const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
-  if (signInError) {
-    console.warn('[Bridge] TON sign-in after signup failed:', signInError.message);
-    return false;
-  }
-
-  return true;
 }
 
 export function SupabaseProvider({ children }: SupabaseProviderProps) {
@@ -132,7 +103,7 @@ export function SupabaseProvider({ children }: SupabaseProviderProps) {
         const parsed = JSON.parse(userStr);
         setTonUser(parsed);
         setIsTonAuth(true);
-        bridgeTonToSupabase(parsed.address, parsed.publicKey);
+        syncTonToProfile(parsed.address, parsed.publicKey);
       } catch {
         localStorage.removeItem(TON_AUTH_TOKEN_KEY);
         localStorage.removeItem(TON_AUTH_USER_KEY);
