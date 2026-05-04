@@ -48,8 +48,10 @@ async function fetchRole(userId: string): Promise<string> {
 }
 
 async function bridgeTonToSupabase(address: string, publicKey: string): Promise<boolean> {
-  const email = `ton-${address}@phantom.ton`;
-  const password = `ton_${address.slice(-8)}_${publicKey.slice(0, 8)}`;
+  const safeAddr = address.replace(/[^a-zA-Z0-9]/g, '').slice(0, 48);
+  const safeKey = publicKey.replace(/[^a-zA-Z0-9]/g, '').slice(0, 32);
+  const email = `ton-${safeAddr}@phantom.ton`;
+  const password = `ton_${safeAddr.slice(-8)}_${safeKey}`;
 
   const { data: existing } = await supabase
     .from('profiles')
