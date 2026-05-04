@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
+import { withRateLimit, denyRateLimited } from "../middleware/rate-limit";
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
@@ -31,7 +32,23 @@ interface AdCampaign {
   end_date: string | null;
 }
 
+function setSecurityHeaders(res: VercelResponse) {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "DENY");
+  res.setHeader("X-XSS-Protection", "0");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  setSecurityHeaders(res);
+
+  const rate = await withRateLimit(req, res, { max: 200, windowMs: 60000, keyPrefix: "ads" });
+  if (!rate.allowed) {
+    denyRateLimited(res);
+    return;
+  }
+
   if (req.method !== "GET") {
     res.setHeader("Allow", "GET");
     res.status(405).json({ error: "method_not_allowed" });
@@ -75,7 +92,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
     res.status(200).json({
       ads: filtered,
-      sync_interval: 300000, // 5 min — how often local server should sync
+      sync_interval: 300000,
       server_timestamp: Date.now(),
     });
   } catch (err) {

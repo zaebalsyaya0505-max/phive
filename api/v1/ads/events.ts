@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
+import { withRateLimit, denyRateLimited } from "../../middleware/rate-limit";
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
@@ -14,7 +15,23 @@ export const config = {
   },
 };
 
+function setSecurityHeaders(res: VercelResponse) {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "DENY");
+  res.setHeader("X-XSS-Protection", "0");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  setSecurityHeaders(res);
+
+  const rate = await withRateLimit(req, res, { max: 500, windowMs: 60000, keyPrefix: "ad-events" });
+  if (!rate.allowed) {
+    denyRateLimited(res);
+    return;
+  }
+
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     res.status(405).json({ error: "method_not_allowed" });
@@ -23,7 +40,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const body = req.body;
-    const events = Array.isArray(body?.events) ? body.events : [body];
+    if (!body || (!Array.isArray(body.events) && !body.event_type)) {
+      res.status(400).json({ error: "invalid_payload" });
+      return;
+    }
+
+    const events = Array.isArray(body.events) ? body.events : [body];
+
+    if (events.length > 50) {
+      res.status(400).json({ error: "too_many_events", max: 50 });
+      return;
+    }
 
     const sb = getSupabase();
     const rowsToInsert = events
@@ -45,7 +72,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return;
       }
 
-      // Update campaign counters
       const impressions = rowsToInsert.filter((e: any) => e.event_type === "impression").length;
       const clicks = rowsToInsert.filter((e: any) => e.event_type === "click").length;
 

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Shield, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 
-const ADMIN_SECRET = 'PHANTOM-ADMIN-2026';
 const SESSION_KEY = 'phantom_admin_token';
 const SESSION_DURATION_MS = 8 * 60 * 60 * 1000;
 
@@ -18,18 +17,27 @@ export default function AdminLoginPage() {
     setError('');
     setLoading(true);
 
-    await new Promise((r) => setTimeout(r, 600));
+    try {
+      const res = await fetch('/api/v1/admin/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: code.trim() }),
+      });
 
-    if (code.trim() === ADMIN_SECRET) {
-      const token = btoa(`${ADMIN_SECRET}:${Date.now()}`);
-      sessionStorage.setItem(SESSION_KEY, token);
-      sessionStorage.setItem(`${SESSION_KEY}_exp`, String(Date.now() + SESSION_DURATION_MS));
-      navigate('/admin', { replace: true });
-    } else {
-      setError('Неверный код доступа');
+      const data = await res.json();
+
+      if (res.ok && data.token) {
+        sessionStorage.setItem(SESSION_KEY, data.token);
+        sessionStorage.setItem(`${SESSION_KEY}_exp`, String(data.expiresAt || Date.now() + SESSION_DURATION_MS));
+        navigate('/admin', { replace: true });
+      } else {
+        setError(data.error === 'invalid_code' ? 'Неверный код доступа' : 'Ошибка сервера');
+      }
+    } catch {
+      setError('Не удалось подключиться к серверу');
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
@@ -62,6 +70,7 @@ export default function AdminLoginPage() {
               placeholder="Секретный код"
               className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-red-400/50 focus:ring-1 focus:ring-red-400/20 transition-colors pr-12"
               autoFocus
+              autoComplete="off"
             />
             <button
               type="button"
