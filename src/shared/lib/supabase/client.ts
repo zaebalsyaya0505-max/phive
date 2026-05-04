@@ -26,9 +26,42 @@ export function isSupabaseConfigured(): boolean {
   return !configMissing && !!supabaseUrl && !!supabaseKey;
 }
 
-export const supabase = {
-  from: (...args: any[]) => getSupabase().from(...args),
-  auth: getSupabase().auth,
-  channel: (...args: any[]) => getSupabase().channel(...args),
-  rpc: (...args: any[]) => getSupabase().rpc(...args),
-};
+export const supabase = getSupabase();
+
+export async function getNotes(userId: string) {
+  const { data, error } = await supabase
+    .from('notes')
+    .select()
+    .eq('user_id', userId)
+    .order('id', { ascending: false });
+  if (error) throw error;
+  return data;
+}
+
+export async function createNote(title: string, userId: string) {
+  const { data, error } = await supabase
+    .from('notes')
+    .insert([{ title, user_id: userId }])
+    .select();
+  if (error) throw error;
+  return data;
+}
+
+export async function deleteNote(id: number, userId: string) {
+  const { error } = await supabase
+    .from('notes')
+    .delete()
+    .eq('id', id)
+    .eq('user_id', userId);
+  if (error) throw error;
+}
+
+export async function updateNote(id: number, title: string) {
+  const { data, error } = await supabase
+    .from('notes')
+    .update({ title })
+    .eq('id', id)
+    .select();
+  if (error) throw error;
+  return data;
+}
