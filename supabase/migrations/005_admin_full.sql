@@ -131,43 +131,56 @@ ALTER TABLE system_health ENABLE ROW LEVEL SECURITY;
 ALTER TABLE email_templates ENABLE ROW LEVEL SECURITY;
 
 -- Admin policies
+DROP POLICY IF EXISTS "Admins manage notifications" ON notifications;
 CREATE POLICY "Admins manage notifications" ON notifications FOR ALL
   USING (EXISTS (SELECT 1 FROM profiles WHERE profiles.id = auth.uid() AND profiles.role = 'admin'));
 
+DROP POLICY IF EXISTS "Admins manage app_settings" ON app_settings;
 CREATE POLICY "Admins manage app_settings" ON app_settings FOR ALL
   USING (EXISTS (SELECT 1 FROM profiles WHERE profiles.id = auth.uid() AND profiles.role = 'admin'));
 
+DROP POLICY IF EXISTS "Admins view audit_logs" ON audit_logs;
 CREATE POLICY "Admins view audit_logs" ON audit_logs FOR SELECT
   USING (EXISTS (SELECT 1 FROM profiles WHERE profiles.id = auth.uid() AND profiles.role = 'admin'));
 
+DROP POLICY IF EXISTS "Admins insert audit_logs" ON audit_logs;
 CREATE POLICY "Admins insert audit_logs" ON audit_logs FOR INSERT
   WITH CHECK (EXISTS (SELECT 1 FROM profiles WHERE profiles.id = auth.uid() AND profiles.role = 'admin'));
 
+DROP POLICY IF EXISTS "Admins manage user_bans" ON user_bans;
 CREATE POLICY "Admins manage user_bans" ON user_bans FOR ALL
   USING (EXISTS (SELECT 1 FROM profiles WHERE profiles.id = auth.uid() AND profiles.role = 'admin'));
 
+DROP POLICY IF EXISTS "Admins manage api_keys" ON api_keys;
 CREATE POLICY "Admins manage api_keys" ON api_keys FOR ALL
   USING (EXISTS (SELECT 1 FROM profiles WHERE profiles.id = auth.uid() AND profiles.role = 'admin'));
 
+DROP POLICY IF EXISTS "Admins manage webhooks" ON webhooks;
 CREATE POLICY "Admins manage webhooks" ON webhooks FOR ALL
   USING (EXISTS (SELECT 1 FROM profiles WHERE profiles.id = auth.uid() AND profiles.role = 'admin'));
 
+DROP POLICY IF EXISTS "Admins manage system_health" ON system_health;
 CREATE POLICY "Admins manage system_health" ON system_health FOR ALL
   USING (EXISTS (SELECT 1 FROM profiles WHERE profiles.id = auth.uid() AND profiles.role = 'admin'));
 
+DROP POLICY IF EXISTS "Admins manage email_templates" ON email_templates;
 CREATE POLICY "Admins manage email_templates" ON email_templates FOR ALL
   USING (EXISTS (SELECT 1 FROM profiles WHERE profiles.id = auth.uid() AND profiles.role = 'admin'));
 
 -- Updated_at triggers
+DROP TRIGGER IF EXISTS set_notifications_updated_at ON notifications;
 CREATE TRIGGER set_notifications_updated_at BEFORE UPDATE ON notifications
   FOR EACH ROW EXECUTE FUNCTION public.handle_updated_at();
 
+DROP TRIGGER IF EXISTS set_app_settings_updated_at ON app_settings;
 CREATE TRIGGER set_app_settings_updated_at BEFORE UPDATE ON app_settings
   FOR EACH ROW EXECUTE FUNCTION public.handle_updated_at();
 
+DROP TRIGGER IF EXISTS set_webhooks_updated_at ON webhooks;
 CREATE TRIGGER set_webhooks_updated_at BEFORE UPDATE ON webhooks
   FOR EACH ROW EXECUTE FUNCTION public.handle_updated_at();
 
+DROP TRIGGER IF EXISTS set_email_templates_updated_at ON email_templates;
 CREATE TRIGGER set_email_templates_updated_at BEFORE UPDATE ON email_templates
   FOR EACH ROW EXECUTE FUNCTION public.handle_updated_at();
 
